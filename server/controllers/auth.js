@@ -1,5 +1,4 @@
 import { generateToken } from "../features/generateToken.js";
-import { protectedroute } from "../midlewares/protectedroute.js";
 import User from "../model/user.js";
 
 import bcrypt from "bcryptjs";
