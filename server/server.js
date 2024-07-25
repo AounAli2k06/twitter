@@ -1,6 +1,7 @@
 import express from "express";
 import auhtRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
+import postRoutes from "./routes/post.js";
 import connectdatabase from "./db/connect.js";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
@@ -25,6 +26,7 @@ cloudinary.config({
 
 app.use("/api/auth", auhtRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
 
 app.listen(process.env.PORT, (k) => {
   console.log(`Server started on port ${process.env.PORT}`);

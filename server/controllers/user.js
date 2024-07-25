@@ -1,6 +1,7 @@
 import User from "../model/user.js";
 import bcrypt from "bcryptjs";
 import { v2 as cloudinary } from "cloudinary";
+import Notification from "../model/notification.js";
 
 export const userProfile = async (req, res) => {
   const { username } = req.params;
@@ -46,6 +47,14 @@ export const followUnfollow = async (req, res) => {
       await User.findByIdAndUpdate(Usertomodify._id, {
         $push: { followers: loggedUser._id },
       });
+
+      const newNotification = new Notification( {
+        to: Usertomodify._id,
+        from: loggedUser._id,
+        type: "FOLLOW",
+      })
+
+      newNotification.save( )
 
       res.status(200).json({ message: "user followed" });
     }
@@ -137,7 +146,7 @@ export const updateUser = async (req, res) => {
       }
 
       const reslt = await cloudinary.uploader.upload(profileImg);
-      profileImg = res.secure_url;
+      profileImg = reslt.secure_url;
     }
 
     if (coverImg) {
@@ -149,7 +158,7 @@ export const updateUser = async (req, res) => {
       }
 
       const reslt = await cloudinary.uploader.upload(profileImg);
-      coverImg = res.secure_url;
+      coverImg = reslt.secure_url;
     }
 
     user.username = username || user.username;

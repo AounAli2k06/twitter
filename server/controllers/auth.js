@@ -59,6 +59,7 @@ export const signup = async (req, res) => {
     const newuser = new User({
       username,
       fullName,
+      likedPost:[],
       password: hashed,
       email,
     });
@@ -81,6 +82,7 @@ export const signup = async (req, res) => {
       res.status(400).json({ message: "invalid user data" });
     }
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ message: "internal server err" });
   }
 };
